@@ -25,9 +25,9 @@ public class Login2 : MonoBehaviour
     public InputField loginPassword;
     [Header("Forgot Account")]
     public InputField emailName;
-   
+	public InputField userName;
 
-
+	//WARNING PHP MAY BE NAMED WRONG!
 
     //Variables
     private string _characters = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -48,8 +48,12 @@ public class Login2 : MonoBehaviour
         form.AddField("password", password);
         UnityWebRequest webRequest = UnityWebRequest.Post(createUserURL, form);
         yield return webRequest.SendWebRequest();
-
-    }
+		if(webRequest.downloadHandler.text == "Username is Exist")
+		{
+			//Active Panel User Exist : true
+		}
+		
+	}
 
     IEnumerator UserLogin(string username, string password)
     {
@@ -67,14 +71,19 @@ public class Login2 : MonoBehaviour
             SceneManager.LoadScene(1);
 
         }
-        else
+        else if(webRequest.downloadHandler.text == "Password Incorrect")
         {
 
-            Debug.Log("Login Failed");
+            Debug.Log("Incorrect Password");
+			//Activate Panel : true
         }
+		else
+		{
+			Debug.Log("Login Error");
+		}
 
     }
-    IEnumerator CheckEmail(string email)
+    IEnumerator CheckEmail(string email, string username)
     {
         string checkEmailURL = "http://localhost/nsirpg/checkemail.php";
         WWWForm form = new WWWForm();
@@ -87,8 +96,7 @@ public class Login2 : MonoBehaviour
         }
         else
         {
-            //username for email = webRequest.downloadHandler.text;
-            SendEmail(email, webRequest.downloadHandler.text);
+            SendEmail(email, username);
         }
     }
     #endregion
@@ -103,9 +111,9 @@ public class Login2 : MonoBehaviour
     {
         StartCoroutine(UserLogin(loginUsername.text, loginPassword.text));
     }
-    public void AttempCheckEmail(InputField _email)
+    public void AttempCheckEmail()
     {
-        StartCoroutine(CheckEmail(_email.text));
+        StartCoroutine(CheckEmail(emailName.text,userName.text));
     }
     public void SendEmail(string email, string username)
     {
@@ -113,7 +121,6 @@ public class Login2 : MonoBehaviour
         MailMessage mail = new MailMessage();
         mail.From = new MailAddress("sqlunityclasssydney@gmail.com");
         mail.To.Add(email);
-        mail.To.Add(username);
         mail.Subject = "NSIRPG Password Reset";
         mail.Body = "Hello" + " " + username + "\nReset using this code: " + _code;
         //Connect to google
