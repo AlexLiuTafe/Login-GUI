@@ -14,7 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Linq;
 #endregion
 
-public class Login2 : MonoBehaviour
+public class Login : MonoBehaviour
 {
     [Header("Create User")]
     public InputField createNewUsername;

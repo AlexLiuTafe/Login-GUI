@@ -2433,7 +2433,7 @@ GameObject:
   - component: {fileID: 1059661121}
   - component: {fileID: 1059661120}
   m_Layer: 5
-  m_Name: CreateAccount
+  m_Name: CreateAccountButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2793,7 +2793,7 @@ GameObject:
   - component: {fileID: 1173223667}
   - component: {fileID: 1173223666}
   m_Layer: 5
-  m_Name: ForgotAccount
+  m_Name: ForgotAccountButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3904,10 +3904,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1856005854}
         m_MethodName: AttempCheckEmail
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 335227638}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.InputField, UnityEngine.UI
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4703,7 +4703,7 @@ GameObject:
   - component: {fileID: 1646777149}
   - component: {fileID: 1646777148}
   m_Layer: 5
-  m_Name: Username
+  m_Name: UsernameIF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5855,7 +5855,7 @@ GameObject:
   - component: {fileID: 1873825670}
   - component: {fileID: 1873825669}
   m_Layer: 5
-  m_Name: Login
+  m_Name: LoginButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6437,7 +6437,7 @@ GameObject:
   - component: {fileID: 2141531788}
   - component: {fileID: 2141531787}
   m_Layer: 5
-  m_Name: Password
+  m_Name: PasswordIF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
