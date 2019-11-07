@@ -26,10 +26,15 @@ public class Login : MonoBehaviour
     [Header("Forgot Account")]
     public InputField emailName;
 	public InputField userName;
-
+	[Header("Notifications")]
+	public GameObject incorrectPassword;
+	public GameObject usernameExist;
 	//WARNING PHP MAY BE NAMED WRONG!
 
-    //Variables
+	//Variables
+	private string user;
+	private string password;
+	private string email;
     private string _characters = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private string _code = "";
     
@@ -44,13 +49,14 @@ public class Login : MonoBehaviour
         string createUserURL = "http://localhost/nsirpg/insertuser.php";
         WWWForm form = new WWWForm();
         form.AddField("username", username);
-        form.AddField("email", email);
-        form.AddField("password", password);
-        UnityWebRequest webRequest = UnityWebRequest.Post(createUserURL, form);
+		form.AddField("password", password);
+		form.AddField("email", email);
+		UnityWebRequest webRequest = UnityWebRequest.Post(createUserURL, form);
         yield return webRequest.SendWebRequest();
 		if(webRequest.downloadHandler.text == "Username is Exist")
 		{
-			//Active Panel User Exist : true
+			Debug.Log("Username Exists");
+			usernameExist.SetActive(true);
 		}
 		
 	}
@@ -65,18 +71,19 @@ public class Login : MonoBehaviour
         yield return webRequest.SendWebRequest();
         Debug.Log(webRequest.downloadHandler.text); //Print debug.log in unity console from the database.
 
-        if (webRequest.downloadHandler.text == "Login Successful")
-        {
-            //Change scene
-            SceneManager.LoadScene(1);
+		if (webRequest.downloadHandler.text == "Login Successful")
+		{
+			//Change scene
+			SceneManager.LoadScene(1);
 
-        }
-        else if(webRequest.downloadHandler.text == "Password Incorrect")
-        {
+		}
+		else if (webRequest.downloadHandler.text == "Password Incorrect")
+		{
 
-            Debug.Log("Incorrect Password");
-			//Activate Panel : true
-        }
+			Debug.Log("Incorrect Password");
+			incorrectPassword.SetActive(true);
+		}
+
 		else
 		{
 			Debug.Log("Login Error");
@@ -103,8 +110,9 @@ public class Login : MonoBehaviour
     #region FUNCTION
     public void CreateNewUser()
     {
-        Debug.Log("New Account Created");
-        StartCoroutine(CreateUser(createNewUsername.text, createNewEmail.text, createNewPassword.text));
+		// NOTE*				Need to paste argument in correct order from the FUNCTION
+        StartCoroutine(CreateUser(createNewUsername.text,createNewPassword.text ,createNewEmail.text));
+		
     }
 
     public void AttemptUserLogin()
