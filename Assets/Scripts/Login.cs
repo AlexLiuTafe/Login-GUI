@@ -29,13 +29,13 @@ public class Login : MonoBehaviour
 	[Header("Notifications")]
 	public GameObject incorrectPassword;
 	public GameObject usernameExist;
-	//WARNING PHP MAY BE NAMED WRONG!
+
+	//IN ORDER TO CONNECT PHP TO XAMPP
+	//NOTE * PHP FILES NEED TO BE PLACE IN XAMPP FOLDER IN HTDOCS FOLDER
+
 
 	//Variables
-	private string user;
-	private string password;
-	private string email;
-    private string _characters = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private string _characters = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private string _code = "";
     
 
@@ -53,9 +53,10 @@ public class Login : MonoBehaviour
 		form.AddField("email", email);
 		UnityWebRequest webRequest = UnityWebRequest.Post(createUserURL, form);
         yield return webRequest.SendWebRequest();
+		Debug.Log(webRequest.downloadHandler.text);
 		if(webRequest.downloadHandler.text == "Username is Exist")
 		{
-			Debug.Log("Username Exists");
+			//Debug.Log("Username Exists");
 			usernameExist.SetActive(true);
 		}
 		
@@ -69,7 +70,7 @@ public class Login : MonoBehaviour
         form.AddField("password", password);
         UnityWebRequest webRequest = UnityWebRequest.Post(loginUserURL, form);
         yield return webRequest.SendWebRequest();
-        Debug.Log(webRequest.downloadHandler.text); //Print debug.log in unity console from the database.
+        //Debug.Log(webRequest.downloadHandler.text); //Print debug.log in unity console from the database.
 
 		if (webRequest.downloadHandler.text == "Login Successful")
 		{
@@ -86,7 +87,7 @@ public class Login : MonoBehaviour
 
 		else
 		{
-			Debug.Log("Login Error");
+			Debug.Log("Login Error/ID NOT FOUND");
 		}
 
     }
@@ -112,11 +113,13 @@ public class Login : MonoBehaviour
     {
 		// NOTE*				Need to paste argument in correct order from the FUNCTION
         StartCoroutine(CreateUser(createNewUsername.text,createNewPassword.text ,createNewEmail.text));
-		
+	
     }
 
     public void AttemptUserLogin()
     {
+		//Store the User ID on Loading Scene
+		KeepOnLoad.userIdOnLoad = loginUsername.text;
         StartCoroutine(UserLogin(loginUsername.text, loginPassword.text));
     }
     public void AttempCheckEmail()

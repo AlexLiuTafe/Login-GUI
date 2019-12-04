@@ -18,7 +18,7 @@ $email = $_POST["email"];
 	{
 		die("Connection Failed.".mysqli_connect_error());
 	}
-	//http://localhost/nsirpg/inseruser.php 
+	//http://localhost/nsirpg/insertuser.php 
 	
 	
 //$ sign is variables we created
